@@ -67,6 +67,8 @@ public class BasicBotTeleop2 extends OpMode {
 
         if(gamepad1.left_bumper){
             shooter.setPower(-0.67);
+        } else if(gamepad1.x){
+            shooter.setPower(0.8);
         }
 
         // Intake + Gecko controls
@@ -88,6 +90,7 @@ public class BasicBotTeleop2 extends OpMode {
             intake.setPower(0);
             geckoLeft.setPower(0);
             geckoRight.setPower(0);
+
         }
 
     }

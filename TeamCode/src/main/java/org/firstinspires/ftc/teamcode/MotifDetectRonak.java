@@ -61,52 +61,37 @@ public class MotifDetectRonak extends LinearOpMode {
             if (result != null && result.isValid()) {
                 List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
 
-                for (LLResultTypes.FiducialResult fr : fiducials) {
-                    int tagID = fr.getFiducialId();
-                    telemetry.addData("Detected Tag ID", tagID);
+                if (fiducials != null) {
+                    for (LLResultTypes.FiducialResult fr : fiducials) {
+                        int tagID = fr.getFiducialId();
+                        telemetry.addData("Detected Tag ID", tagID);
 
-                    // Display motif
-                    switch (tagID) {
-                        case 21:
-                            telemetry.addData("Motif Pattern", String.join("-", tag21));
-                            break;
-                        case 22:
-                            telemetry.addData("Motif Pattern", String.join("-", tag22));
-                            break;
-                        case 23:
-                            telemetry.addData("Motif Pattern", String.join("-", tag23));
-                            break;
-                        default:
-                            telemetry.addLine("Unknown Tag ID — no motif assigned.");
-                            break;
+                        // Display motif
+                        switch (tagID) {
+                            case 21:
+                                telemetry.addData("Motif Pattern", String.join("-", tag21));
+                                break;
+                            case 22:
+                                telemetry.addData("Motif Pattern", String.join("-", tag22));
+                                break;
+                            case 23:
+                                telemetry.addData("Motif Pattern", String.join("-", tag23));
+                                break;
+                            default:
+                                telemetry.addLine("Unknown Tag ID — no motif assigned.");
+                                break;
+                        }
                     }
-
-                    // Move forward for 1 second when any valid tag is seen
-                    moveForward(0.4); // you can adjust the power (0.3–0.6 recommended)
-                    sleep(1000);
-                    stopMotors();
                 }
             } else {
                 telemetry.addLine("No valid Limelight data.");
             }
 
             telemetry.update();
+            sleep(50); // small delay to prevent CPU overload
         }
 
         limelight.stop();
     }
-
-    private void moveForward(double power) {
-        leftFront.setPower(power);
-        leftBack.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(power);
-    }
-
-    private void stopMotors() {
-        leftFront.setPower(0);
-        leftBack.setPower(0);
-        rightFront.setPower(0);
-        rightBack.setPower(0);
-    }
 }
+
